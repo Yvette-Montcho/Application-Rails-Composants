@@ -326,4 +326,4 @@ git push -u origin main
 
 ## Licence
 
-Ce projet est réalisé dans un cadre pédagogique — libre d'utilisation et de modification.
+Ce projet est réalisé dans le cadre de la formation ETP4A - Semaine 8, Jour 3.
