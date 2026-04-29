@@ -1,4 +1,4 @@
-# EventFreeka — Application Rails & Composants
+# EventFreeka - Application Rails & Composants
 
 > Projet pédagogique illustrant le design atomique avec le système de **partials Rails**,
 > la gestion des **alertes Flash Bootstrap**, et l'organisation moderne du front-end
@@ -54,7 +54,7 @@ selon les principes du **design atomique** et de la philosophie **DRY** (Don't R
 ## Architecture des partials
 
 ```
-80% du HTML dans des partials — les views ne font qu'assembler des composants
+80% du HTML dans des partials - les views ne font qu'assembler des composants
 ```
 
 | Partial | Emplacement | Rôle |
