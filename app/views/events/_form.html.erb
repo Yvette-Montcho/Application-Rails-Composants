@@ -1,0 +1,116 @@
+<%# app/views/events/_form.html.erb — Partial du formulaire d'événement %>
+<%# Partagée entre new.html.erb et edit.html.erb (principe DRY) %>
+<%# Appelée via : <%= render "form", event: @event %>
+<%#
+<%# La variable locale "event" correspond à @event (nouveau ou existant)
+<%# form_with détecte automatiquement si c'est une création (POST) ou une modification (PATCH)
+
+<%# form_with génère le formulaire HTML avec la protection CSRF (authenticity_token) %>
+<%# model: event => Rails déduit l'URL (/events ou /events/:id) et la méthode HTTP %>
+<%= form_with model: event, local: true, class: "needs-validation" do |f| %>
+
+  <%# ── TITRE ──────────────────────────────────────────────────────── %>
+  <div class="mb-3">
+    <%# Label associé au champ (for= lié au id= du input) %>
+    <%= f.label :title, "Titre de l'événement", class: "form-label fw-semibold" %>
+
+    <%# Champ texte — form-control est la classe Bootstrap pour les inputs %>
+    <%= f.text_field :title,
+                     class: "form-control #{'is-invalid' if event.errors[:title].any?}",
+                     placeholder: "Ex: Concert de jazz au Parc Monceau" %>
+
+    <%# Affiche l'erreur de validation si le titre est invalide %>
+    <% if event.errors[:title].any? %>
+      <div class="invalid-feedback"><%= event.errors[:title].first %></div>
+    <% end %>
+  </div>
+
+  <%# ── DESCRIPTION ────────────────────────────────────────────────── %>
+  <div class="mb-3">
+    <%= f.label :description, "Description", class: "form-label fw-semibold" %>
+
+    <%# Zone de texte multiligne — rows: 4 définit la hauteur initiale %>
+    <%= f.text_area :description,
+                    rows: 4,
+                    class: "form-control #{'is-invalid' if event.errors[:description].any?}",
+                    placeholder: "Décrivez votre événement en détail (min. 20 caractères)" %>
+
+    <% if event.errors[:description].any? %>
+      <div class="invalid-feedback"><%= event.errors[:description].first %></div>
+    <% end %>
+  </div>
+
+  <%# ── LIEU ───────────────────────────────────────────────────────── %>
+  <div class="mb-3">
+    <%= f.label :location, "Lieu", class: "form-label fw-semibold" %>
+
+    <%= f.text_field :location,
+                     class: "form-control #{'is-invalid' if event.errors[:location].any?}",
+                     placeholder: "Ex: Salle Pleyel, Paris" %>
+
+    <% if event.errors[:location].any? %>
+      <div class="invalid-feedback"><%= event.errors[:location].first %></div>
+    <% end %>
+  </div>
+
+  <%# ── DATE ET HEURE ──────────────────────────────────────────────── %>
+  <div class="mb-3">
+    <%= f.label :event_date, "Date et heure", class: "form-label fw-semibold" %>
+
+    <%# datetime-local permet de saisir date + heure dans un seul champ %>
+    <%= f.datetime_local_field :event_date,
+                               class: "form-control #{'is-invalid' if event.errors[:event_date].any?}" %>
+
+    <% if event.errors[:event_date].any? %>
+      <div class="invalid-feedback"><%= event.errors[:event_date].first %></div>
+    <% end %>
+  </div>
+
+  <%# ── PRIX ───────────────────────────────────────────────────────── %>
+  <div class="mb-3">
+    <%= f.label :price, "Prix (€)", class: "form-label fw-semibold" %>
+
+    <%# Groupe d'input avec symbole € à gauche (input-group Bootstrap) %>
+    <div class="input-group">
+      <span class="input-group-text"><i class="bi bi-currency-euro"></i></span>
+      <%= f.number_field :price,
+                         min: 0,
+                         step: 0.01,
+                         class: "form-control #{'is-invalid' if event.errors[:price].any?}",
+                         placeholder: "0.00 pour gratuit" %>
+      <% if event.errors[:price].any? %>
+        <div class="invalid-feedback"><%= event.errors[:price].first %></div>
+      <% end %>
+    </div>
+  </div>
+
+  <%# ── URL DE L'IMAGE ─────────────────────────────────────────────── %>
+  <div class="mb-4">
+    <%= f.label :image_url, "URL de l'image (optionnel)", class: "form-label fw-semibold" %>
+
+    <%= f.url_field :image_url,
+                    class: "form-control #{'is-invalid' if event.errors[:image_url].any?}",
+                    placeholder: "https://exemple.com/image.jpg" %>
+
+    <%# Texte d'aide sous le champ (muted = grisé) %>
+    <div class="form-text text-muted">
+      <i class="bi bi-info-circle me-1"></i>
+      Laissez vide pour utiliser l'image par défaut.
+    </div>
+
+    <% if event.errors[:image_url].any? %>
+      <div class="invalid-feedback"><%= event.errors[:image_url].first %></div>
+    <% end %>
+  </div>
+
+  <%# ── BOUTONS D'ACTION ───────────────────────────────────────────── %>
+  <div class="d-flex gap-2">
+    <%# Bouton de soumission — le texte change selon qu'on crée ou modifie %>
+    <%= f.submit event.new_record? ? "Créer l'événement" : "Enregistrer les modifications",
+                 class: "btn btn-primary" %>
+
+    <%# Lien d'annulation — retour à la liste des événements %>
+    <%= link_to "Annuler", events_path, class: "btn btn-outline-secondary" %>
+  </div>
+
+<% end %>

@@ -1,0 +1,58 @@
+<%# app/views/layouts/_header.html.erb — Partial de la barre de navigation %>
+<%# Appelée dans application.html.erb via <%= render 'layouts/header' %> %>
+<%# S'affiche sur TOUTES les pages de l'application %>
+
+<%# Navbar Bootstrap fixée en haut, fond sombre (classe navbar-dark bg-dark) %>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark shadow-sm">
+  <div class="container">
+
+    <%# ── LOGO / NOM DE L'APPLICATION ────────────────────────────────── %>
+
+    <%# Lien cliquable vers la page d'accueil (root_path = "/") %>
+    <%# navbar-brand est la classe Bootstrap pour le logo/nom de l'app %>
+    <%= link_to root_path, class: "navbar-brand fw-bold" do %>
+      <%# Icône Bootstrap "calendar-event" suivie du nom de l'application %>
+      <i class="bi bi-calendar-event-fill me-2"></i>EventFreeka
+    <% end %>
+
+    <%# ── BOUTON HAMBURGER (MOBILE) ──────────────────────────────────── %>
+
+    <%# Bouton visible uniquement sur petits écrans pour afficher/masquer le menu %>
+    <%# data-bs-toggle="collapse" active le menu déroulant Bootstrap %>
+    <button class="navbar-toggler"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#navbarContent"
+            aria-controls="navbarContent"
+            aria-expanded="false"
+            aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <%# ── LIENS DE NAVIGATION ────────────────────────────────────────── %>
+
+    <%# Conteneur collapsible : visible en grand écran, caché sur mobile (toggle ci-dessus) %>
+    <div class="collapse navbar-collapse" id="navbarContent">
+
+      <%# Liste de liens à gauche %>
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+
+        <%# Lien vers la liste de tous les événements %>
+        <li class="nav-item">
+          <%# link_to génère un <a> avec la classe active si on est sur la bonne page %>
+          <%= link_to "Événements",
+                      events_path,
+                      class: "nav-link #{'active' if current_page?(events_path)}" %>
+        </li>
+
+      </ul>
+
+      <%# Lien d'action "Créer un événement" affiché à droite de la navbar %>
+      <%# Stylé comme un bouton Bootstrap pour le mettre en valeur %>
+      <%= link_to "Créer un événement",
+                  new_event_path,
+                  class: "btn btn-outline-light btn-sm" %>
+    </div>
+
+  </div>
+</nav>

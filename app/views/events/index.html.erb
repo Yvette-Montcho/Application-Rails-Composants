@@ -1,0 +1,62 @@
+<%# app/views/events/index.html.erb — Page de liste des événements %>
+<%# Affiche tous les événements à venir sous forme de grille de cartes %>
+<%# Objectif : 80% du HTML dans des partials, cette view est quasi vide de HTML %>
+
+<%# Définit le titre de la page (utilisé dans <title> via le layout et le helper page_title) %>
+<% content_for :title, "Événements à venir" %>
+
+<%# ── BANNIÈRE ─────────────────────────────────────────────────────────────── %>
+
+<%# Appelle la partial partagée app/views/shared/_banner.html.erb %>
+<%# Passe des variables locales pour personnaliser la bannière de cette page %>
+<%= render 'shared/banner',
+           title: "Événements à venir",
+           subtitle: "Découvrez et rejoignez les prochains événements près de chez vous",
+           bg_class: "bg-dark" %>
+
+<%# ── CONTENU PRINCIPAL ───────────────────────────────────────────────────── %>
+<div class="container pb-5">
+
+  <%# Ligne d'en-tête avec compteur et bouton de création %>
+  <div class="d-flex justify-content-between align-items-center mb-4">
+    <%# Affiche le nombre d'événements trouvés %>
+    <p class="text-muted mb-0">
+      <strong><%= @events.count %></strong>
+      <%= @events.count > 1 ? "événements trouvés" : "événement trouvé" %>
+    </p>
+
+    <%# Bouton raccourci vers le formulaire de création %>
+    <%= link_to new_event_path, class: "btn btn-primary btn-sm" do %>
+      <i class="bi bi-plus-circle me-1"></i> Créer un événement
+    <% end %>
+  </div>
+
+  <%# ── GRILLE D'ÉVÉNEMENTS ─────────────────────────────────────────── %>
+
+  <% if @events.any? %>
+    <%# Grille responsive : 1 colonne sur mobile, 2 sur tablette, 3 sur desktop %>
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+
+      <%# Boucle sur chaque événement et rend la partial _event.html.erb %>
+      <%# Rails passe automatiquement chaque élément dans une variable "event" %>
+      <% @events.each do |event| %>
+        <div class="col">
+          <%# Appelle la partial app/views/events/_event.html.erb %>
+          <%# Passe l'objet event en variable locale %>
+          <%= render partial: 'event', locals: { event: event } %>
+        </div>
+      <% end %>
+
+    </div>
+
+  <% else %>
+    <%# État vide : aucun événement à venir — affiche un message convivial %>
+    <div class="text-center py-5">
+      <i class="bi bi-calendar-x display-1 text-muted"></i>
+      <h3 class="mt-3 text-muted">Aucun événement à venir</h3>
+      <p class="text-muted">Soyez le premier à créer un événement !</p>
+      <%= link_to "Créer le premier événement", new_event_path, class: "btn btn-primary mt-2" %>
+    </div>
+  <% end %>
+
+</div>

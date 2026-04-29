@@ -1,0 +1,89 @@
+<%# app/views/events/show.html.erb — Page de détail d'un événement %>
+<%# Affiche toutes les informations d'un événement précis %>
+<%# @event est fourni par le before_action set_event dans EventsController %>
+
+<%# Titre dynamique de la page = titre de l'événement %>
+<% content_for :title, @event.title %>
+
+<%# ── BANNIÈRE AVEC L'IMAGE DE L'ÉVÉNEMENT ────────────────────────────────── %>
+
+<%# Section hero avec l'image de couverture en fond %>
+<div class="position-relative mb-4" style="height: 320px; overflow: hidden;">
+  <%# Image de couverture en fond plein écran — display_image retourne un placeholder si vide %>
+  <img src="<%= @event.display_image %>"
+       alt="<%= @event.title %>"
+       class="w-100 h-100"
+       style="object-fit: cover; filter: brightness(0.6);">
+
+  <%# Superposition du titre sur l'image — position absolue centrée %>
+  <div class="position-absolute top-50 start-50 translate-middle text-white text-center px-3">
+    <%# Badge de prix superposé sur l'image %>
+    <span class="badge <%= @event.price.zero? ? 'bg-success' : 'bg-primary' %> mb-3 fs-6">
+      <%= @event.formatted_price %>
+    </span>
+    <%# Titre de l'événement en grand %>
+    <h1 class="display-5 fw-bold"><%= @event.title %></h1>
+  </div>
+</div>
+
+<%# ── CONTENU PRINCIPAL ───────────────────────────────────────────────────── %>
+<div class="container pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+
+      <%# ── MÉTADONNÉES EN HAUT ──────────────────────────────────────── %>
+      <div class="d-flex flex-wrap gap-4 mb-4 text-muted">
+
+        <%# Date et heure de l'événement %>
+        <div>
+          <i class="bi bi-calendar3 me-2 text-primary"></i>
+          <%# Formatage de la date en français %>
+          <strong><%= @event.event_date.strftime("%A %d %B %Y") %></strong>
+          à <%= @event.event_date.strftime("%Hh%M") %>
+        </div>
+
+        <%# Lieu de l'événement %>
+        <div>
+          <i class="bi bi-geo-alt-fill me-2 text-danger"></i>
+          <strong><%= @event.location %></strong>
+        </div>
+
+      </div>
+
+      <%# Séparateur horizontal %>
+      <hr>
+
+      <%# ── DESCRIPTION COMPLÈTE ────────────────────────────────────── %>
+      <h2 class="h4 mb-3 fw-semibold">À propos de cet événement</h2>
+
+      <%# simple_format préserve les sauts de ligne dans la description %>
+      <div class="text-secondary lh-lg">
+        <%= simple_format(@event.description) %>
+      </div>
+
+      <hr>
+
+      <%# ── BOUTONS D'ACTIONS ───────────────────────────────────────── %>
+      <div class="d-flex flex-wrap gap-2 mt-4">
+
+        <%# Bouton de modification — mène au formulaire d'édition %>
+        <%= link_to "Modifier l'événement",
+                    edit_event_path(@event),
+                    class: "btn btn-outline-primary" %>
+
+        <%# Bouton de suppression avec confirmation JavaScript avant d'envoyer la requête DELETE %>
+        <%= button_to "Supprimer l'événement",
+                      event_path(@event),
+                      method: :delete,
+                      data: { turbo_confirm: "Êtes-vous sûr de vouloir supprimer « #{@event.title} » ?" },
+                      class: "btn btn-outline-danger" %>
+
+        <%# Lien retour vers la liste — placé à gauche via ms-auto %>
+        <%= link_to "← Retour aux événements",
+                    events_path,
+                    class: "btn btn-link text-muted ms-auto" %>
+      </div>
+
+    </div>
+  </div>
+</div>

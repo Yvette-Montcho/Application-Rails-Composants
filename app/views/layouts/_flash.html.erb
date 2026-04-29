@@ -1,0 +1,43 @@
+<%# app/views/layouts/_flash.html.erb — Partial d'affichage des messages flash %>
+<%# Appelée dans application.html.erb via <%= render 'layouts/flash' %> %>
+<%# S'affiche entre le header et le contenu principal de chaque page %>
+<%# Si le hash flash est vide, cette partial n'affiche rien du tout %>
+
+<%# Conteneur qui positionne les alertes au-dessus du contenu principal %>
+<div class="container mt-3">
+
+  <%# Boucle sur le hash flash — chaque clé est le "type", chaque valeur est le "message" %>
+  <%# Si flash est vide ({}) cette boucle ne s'exécute pas => rien n'est affiché %>
+  <% flash.each do |type, msg| %>
+
+    <%# Alerte Bootstrap dismissable (avec bouton de fermeture ×) %>
+    <%# bootstrap_class_for_flash(type) est défini dans application_helper.rb %>
+    <%# Il convertit ex: "success" => "alert-success", "error" => "alert-danger" %>
+    <div class="alert <%= bootstrap_class_for_flash(type) %> alert-dismissible fade show"
+         role="alert">
+
+      <%# Icône dynamique selon le type d'alerte pour renforcer le message visuellement %>
+      <% icon = case type.to_s
+                when "success" then "bi-check-circle-fill"  # Coche verte
+                when "error"   then "bi-x-circle-fill"      # Croix rouge
+                when "notice"  then "bi-info-circle-fill"   # Info bleue
+                when "alert"   then "bi-exclamation-triangle-fill" # Triangle orange
+                else                "bi-bell-fill"          # Cloche par défaut
+                end %>
+      <i class="bi <%= icon %> me-2"></i>
+
+      <%# Affiche le texte du message flash %>
+      <%= msg %>
+
+      <%# Bouton de fermeture de l'alerte — utilise le plugin JS Bootstrap (data-bs-dismiss) %>
+      <button type="button"
+              class="btn-close"
+              data-bs-dismiss="alert"
+              aria-label="Fermer">
+      </button>
+
+    </div>
+
+  <% end %>
+
+</div>

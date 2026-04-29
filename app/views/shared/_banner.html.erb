@@ -1,0 +1,30 @@
+<%# app/views/shared/_banner.html.erb — Partial de bannière réutilisable %>
+<%# Peut être appelée depuis n'importe quelle view avec des variables locales %>
+<%#
+<%#   Exemple d'appel depuis une view :
+<%#   <%= render 'shared/banner', title: "Tous les événements", subtitle: "Découvrez les prochains événements" %>
+<%#
+<%# Variables locales acceptées :
+<%#   - title    : (String, obligatoire) Le titre principal de la bannière
+<%#   - subtitle : (String, optionnel)  Le sous-titre ou description
+<%#   - bg_class : (String, optionnel)  Classe CSS de fond (ex: "bg-primary", "bg-dark")
+
+<%# Détermine la classe de fond — utilise la variable locale ou "bg-primary" par défaut %>
+<% bg_class ||= "bg-primary" %>
+
+<%# Section hero (bannière) avec fond coloré et texte centré %>
+<section class="py-5 text-white text-center <%= bg_class %> mb-4">
+  <div class="container">
+
+    <%# Titre principal de la bannière — passé en variable locale %>
+    <h1 class="display-5 fw-bold mb-2">
+      <%= title %>
+    </h1>
+
+    <%# Sous-titre — affiché uniquement si la variable locale "subtitle" est définie %>
+    <% if local_assigns[:subtitle].present? %>
+      <p class="lead mb-0 opacity-75"><%= subtitle %></p>
+    <% end %>
+
+  </div>
+</section>

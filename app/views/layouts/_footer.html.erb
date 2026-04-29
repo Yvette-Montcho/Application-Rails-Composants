@@ -1,0 +1,41 @@
+<%# app/views/layouts/_footer.html.erb — Partial du pied de page %>
+<%# Appelée dans application.html.erb via <%= render 'layouts/footer' %> %>
+<%# S'affiche en bas de TOUTES les pages de l'application %>
+
+<%# Footer avec fond sombre et texte clair — mt-auto le colle en bas de page avec flexbox %>
+<footer class="footer bg-dark text-light mt-5 py-4">
+  <div class="container">
+    <div class="row align-items-center">
+
+      <%# ── COLONNE GAUCHE : nom de l'application ────────────────────── %>
+      <div class="col-md-4 text-center text-md-start mb-3 mb-md-0">
+        <%# Nom de l'application avec icône %>
+        <span class="fw-bold fs-5">
+          <i class="bi bi-calendar-event-fill me-2"></i>EventFreeka
+        </span>
+        <%# Sous-titre descriptif %>
+        <p class="text-muted small mb-0 mt-1">La plateforme d'événements Rails</p>
+      </div>
+
+      <%# ── COLONNE CENTRALE : liens rapides ────────────────────────── %>
+      <div class="col-md-4 text-center mb-3 mb-md-0">
+        <%# Lien vers la liste des événements %>
+        <%= link_to "Tous les événements", events_path, class: "text-light text-decoration-none me-3" %>
+
+        <%# Lien vers le formulaire de création %>
+        <%= link_to "Créer un événement", new_event_path, class: "text-light text-decoration-none" %>
+      </div>
+
+      <%# ── COLONNE DROITE : copyright ──────────────────────────────── %>
+      <div class="col-md-4 text-center text-md-end">
+        <%# Affiche l'année courante dynamiquement via Ruby — évite de devoir mettre à jour manuellement %>
+        <small class="text-muted">
+          &copy; <%= Date.today.year %> EventFreeka — Fait avec
+          <i class="bi bi-heart-fill text-danger"></i>
+          et Ruby on Rails
+        </small>
+      </div>
+
+    </div>
+  </div>
+</footer>

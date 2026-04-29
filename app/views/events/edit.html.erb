@@ -1,0 +1,40 @@
+<%# app/views/events/edit.html.erb — Page de modification d'un événement existant %>
+<%# Réutilise exactement la même partial _form.html.erb que new.html.erb (DRY !) %>
+<%# @event est l'événement existant chargé par le before_action set_event %>
+
+<%# Titre dynamique incluant le nom de l'événement modifié %>
+<% content_for :title, "Modifier #{@event.title}" %>
+
+<%# ── BANNIÈRE ─────────────────────────────────────────────────────────────── %>
+
+<%# Bannière partagée avec fond orange pour distinguer visuellement la modification %>
+<%= render 'shared/banner',
+           title: "Modifier l'événement",
+           subtitle: @event.title,
+           bg_class: "bg-warning text-dark" %>
+
+<%# ── FORMULAIRE ──────────────────────────────────────────────────────────── %>
+<div class="container pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <%# Carte Bootstrap enveloppant le formulaire %>
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+          <%# Appelle la même partial _form.html.erb que new.html.erb %>
+          <%# form_with détecte que @event est persisted? => génère PATCH /events/:id %>
+          <%# Cela illustre parfaitement le principe DRY des partials Rails %>
+          <%= render 'form', event: @event %>
+
+        </div>
+      </div>
+
+      <%# Lien rapide vers la page de détail pour annuler et voir l'événement actuel %>
+      <div class="text-center mt-3">
+        <%= link_to "← Retour à l'événement", event_path(@event), class: "text-muted small" %>
+      </div>
+
+    </div>
+  </div>
+</div>

@@ -1,0 +1,35 @@
+<%# app/views/events/new.html.erb — Page de création d'un nouvel événement %>
+<%# Contient quasi uniquement des appels à des partials (objectif : 80% de partials) %>
+<%# @event est un objet Event.new fourni par l'action new du contrôleur %>
+
+<%# Titre de l'onglet navigateur %>
+<% content_for :title, "Créer un événement" %>
+
+<%# ── BANNIÈRE ─────────────────────────────────────────────────────────────── %>
+
+<%# Bannière partagée avec fond vert pour distinguer visuellement la création %>
+<%= render 'shared/banner',
+           title: "Créer un événement",
+           subtitle: "Remplissez le formulaire pour publier votre événement",
+           bg_class: "bg-success" %>
+
+<%# ── FORMULAIRE ──────────────────────────────────────────────────────────── %>
+<div class="container pb-5">
+  <div class="row justify-content-center">
+    <div class="col-lg-7">
+
+      <%# Carte Bootstrap qui enveloppe le formulaire pour un rendu soigné %>
+      <div class="card shadow-sm border-0">
+        <div class="card-body p-4">
+
+          <%# Appelle la partial _form.html.erb partagée avec edit.html.erb %>
+          <%# event: @event passe l'objet en variable locale pour que form_with %>
+          <%# sache qu'il s'agit d'une création (POST /events) %>
+          <%= render 'form', event: @event %>
+
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
