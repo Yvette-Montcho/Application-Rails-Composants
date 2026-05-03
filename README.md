@@ -16,7 +16,6 @@
 6. [Exécution avec VS Code](#exécution-avec-vs-code)
 7. [Extensions VS Code recommandées](#extensions-vs-code-recommandées)
 8. [Structure du projet](#structure-du-projet)
-9. [Nom du repository GitHub](#nom-du-repository-github)
 
 ---
 
@@ -298,31 +297,6 @@ eventfreeka/
 ├── Gemfile
 └── README.md
 ```
-
----
-
-## Nom du repository GitHub
-
-> **Nom recommandé : `eventfreeka-rails-components`**
-
-Ce nom est :
-- **Descriptif** : il indique clairement le projet (EventFreeka) et le concept principal (Rails + composants/partials)
-- **SEO-friendly** : les mots-clés Rails et components sont reconnus par GitHub
-- **Convention GitHub** : kebab-case (minuscules + tirets), sans espaces ni accents
-
-### Commandes pour publier sur GitHub
-
-```bash
-# Dans le dossier du projet
-git init
-git add .
-git commit -m "Initial commit: EventFreeka Rails components project"
-git branch -M main
-git remote add origin https://github.com/VOTRE_USERNAME/eventfreeka-rails-components.git
-git push -u origin main
-```
-
----
 
 ## Licence
 
